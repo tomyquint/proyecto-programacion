@@ -1,18 +1,12 @@
-<html>
-    <head>
-        <title>Proyecto de Programación</title>
-    </head>
-    <body>
-        <div>
-            <h1>Prueba</h1>
-            <p>Prueba HTML</p>
-            {% for producto in productos %}
-                <div>
-                    <p> Categoría: {{ producto.categoría }}</p>
-                    <h3>{{ producto.nombre }}</h3>
-                    <p>Cantidad: {{ producto.cantidad|linebreaksbr }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    </body>
-</html>
+{% extends 'stock_control/base.html' %}
+
+{% block content %}
+  {% for producto in productos %}
+    <div>
+      <p> Categoría: {{ producto.categoría }}</p>
+      <h2><a href="{% url 'detalle_producto' pk=producto.pk %}">{{ producto.nombre }}</a></h2>
+      <img src="{{ MEDIA_URL }}{{ producto.imagen }}"/>
+      <p>Cantidad: {{ producto.cantidad|linebreaksbr }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}
