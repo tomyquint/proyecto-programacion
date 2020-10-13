@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if form.errors %}
-        <p>La contraseña y usuario no funcionan. Intente de nuevo.</p>
+        <p>La contraseña o usuario no son correctos. Intente de nuevo.</p>
     {% endif %}
 
     <form method="post" action="{% url 'login' %}">

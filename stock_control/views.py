@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from .models import Producto
 from .forms import ProductoForm
 
@@ -26,4 +26,29 @@ def producto_nuevo(request):
             return redirect('detalle_producto', pk=producto.pk)
     else:
         form = ProductoForm()
-    return render(request, 'stock_control/producto_nuevo.html', {'form': form})
+    return render(request, 'stock_control/editar_producto.html', {'form': form})
+
+@login_required
+def editar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == "POST":
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.save()
+            return redirect('detalle_producto', pk=producto.pk)
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'stock_control/editar_producto.html', {'form': form})
+
+@login_required
+def signup(request):
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('/')
+    return render(request, 'registration/signup.html', {'form': form})
