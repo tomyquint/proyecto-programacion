@@ -1,27 +1,65 @@
+<!DOCTYPE html>
 {% load static %}
 <html>
     <head>
         <title>Proyecto de Programación</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'css/stock.css' %}">
         <script src="https://kit.fontawesome.com/d014174509.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/stock_control.css' %}">
     </head>
+
     <body>
-      <div class="page-header">
-        {% if user.is_authenticated %}
-            <a href="{% url 'producto_nuevo' %}" class="top-menu"><i class="fas fa-plus"></i></a>
-            <p class="top-menu">¡Hola, {{ user.username }}! <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
-            <a href="{% url 'signup' %}" class="top-menu"><i class="fas fa-user-plus"></i></a>
-        {% else %}
-            <a href="{% url 'login' %}" class="top-menu"><i class="fas fa-lock"></i></a>
-        {% endif %}
-        <h1>Control de Stock</h1>
-      </div>
-      <div class="content container">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="{% url 'lista_productos' %}">Control de Stock</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+
+            {% if user.is_authenticated %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'producto_nuevo' %}" class="top-menu">Agregar Producto <i class="fas fa-plus"></i></a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'signup' %}">Añadir Usuario <i class="fas fa-user-plus"></i></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+              </div>
+            </li>
+
+            {% else %}
+
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Debe iniciar sesión para acceder al sistema.</a>
+            </li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </nav>
+
+      <br>
+
+      <div class="container">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md">
+
             {% block content %}
             {% endblock %}
+
           </div>
         </div>
       </div>

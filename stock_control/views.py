@@ -2,14 +2,47 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from .models import Producto
+from .models import Producto, Categoría
 from .forms import ProductoForm
 
 # Create your views here.
+def consulta_es_válida(parametro):
+    if parametro != '' and parametro is not None:
+        return True
+    else:
+        return False
+
 @login_required
 def lista_productos(request):
-    productos = Producto.objects.all()
-    return render(request, 'stock_control/lista_productos.html', {'productos': productos})
+    qs = Producto.objects.all()
+    categorías = Categoría.objects.all()
+    nombre_contiene = request.GET.get('nombre_contiene')
+    marca_contiene = request.GET.get('marca_contiene')
+    categoría = request.GET.get('categoría')
+    precio_mínimo = request.GET.get('precio_mínimo')
+    precio_máximo = request.GET.get('precio_máximo')
+
+    if consulta_es_válida(nombre_contiene):
+        qs= qs.filter(nombre__icontains=nombre_contiene)
+
+    if consulta_es_válida(marca_contiene):
+        qs= qs.filter(marca__icontains=marca_contiene)
+
+    if consulta_es_válida(precio_mínimo):
+        qs = qs.filter(precio__gte=precio_mínimo)
+
+    if consulta_es_válida(precio_máximo):
+        qs = qs.filter(precio__lte=precio_máximo)
+
+    if consulta_es_válida(categoría):
+        qs = qs.filter(categoría__nombre=categoría)
+
+    contexto = {
+        'queryset': qs,
+        'categorías': categorías,
+    }
+
+    return render(request, 'stock_control/lista_productos.html', contexto)
 
 @login_required
 def detalle_producto(request, pk):

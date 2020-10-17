@@ -1,12 +1,78 @@
 {% extends 'stock_control/base.html' %}
 
 {% block content %}
-  {% for producto in productos %}
-    <div>
-      <p> Categoría: {{ producto.categoría }}</p>
-      <h2><a href="{% url 'detalle_producto' pk=producto.pk %}">{{ producto.nombre }}</a></h2>
-      <img src="{{ MEDIA_URL }}{{ producto.imagen }}"/>
-      <p>Cantidad: {{ producto.cantidad|linebreaksbr }}</p>
+
+  <form action="." method="GET">
+
+    <div class="form-row">
+      <div class="form-group col-md-12 mb-3">
+        <label for="inputNombre">Filtrar por nombre</label>
+        <input class="form-control" type="search" placeholder="Nombre" name="nombre_contiene" id="inputNombre">
+      </div>
     </div>
-  {% endfor %}
+
+    <div class="form-row">
+      <div class="form-group col-md-12 mb-3">
+        <label for="inputMarca">Filtrar por marca</label>
+        <input class="form-control" type="search" placeholder="Marca" name="marca_contiene" id="inputMarca">
+      </div>
+    </div>
+
+    <div class="form-row">
+
+      <div class="form-group col-md-4">
+        <label for="inputCategoría">Filtrar por Categoría</label>
+        <select class="form-control" name="categoría" id="inputCategoría">
+          <option disabled selected>Escoja una categoría...</option>
+          {% for categoría in categorías %}
+          <option value="{{ categoría }}">{{ categoría }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputMínimo">Filtrar por Precio Mínimo</label>
+        <input type="number" class="form-control" placeholder="Precio Mínimo (solo números)" name="precio_mínimo" id="inputMínimo">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputMáximo">Filtrar por Precio Máximo</label>
+        <input type="number" class="form-control" placeholder="Precio Máximo (solo números)" name="precio_máximo" id="inputMáximo">
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+
+  </form>
+
+  <br>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Imagen</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Código de Barras</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in queryset %}
+      <tr>
+        <th scope="row"><a href="{% url 'detalle_producto' pk=producto.pk %}">{{ producto.nombre }}</a></th>
+        <td><img src="{{ MEDIA_URL }}{{ producto.imagen }}" class="imagen_tabla"></td>
+        <td>{{ producto.marca }}</td>
+        <td>{% for categoría in producto.categoría.all %} {{ categoría }} {% endfor %}</td>
+        <td>{{ producto.cantidad }}</td>
+        <td>${{ producto.precio }}</td>
+        <td>{{ producto.código }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
 {% endblock %}
