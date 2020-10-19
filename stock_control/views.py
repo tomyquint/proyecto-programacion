@@ -73,6 +73,8 @@ def editar_producto(request, pk):
         if form.is_valid():
             producto = form.save(commit=False)
             producto.save()
+            producto.categoría.set(form.cleaned_data.get("categoría"))
+            form.save_m2m()
             return redirect('detalle_producto', pk=producto.pk)
     else:
         form = ProductoForm(instance=producto)
