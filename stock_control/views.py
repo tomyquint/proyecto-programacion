@@ -69,8 +69,9 @@ def producto_nuevo(request):
 def editar_producto(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     if request.method == "POST":
-        form = ProductoForm(request.POST, instance=producto)
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
         if form.is_valid():
+            archivo_imagen = Producto(imagen = request.FILES.get('filepath', False))
             producto = form.save(commit=False)
             producto.save()
             producto.categoría.set(form.cleaned_data.get("categoría"))
