@@ -58,7 +58,7 @@ def producto_nuevo(request):
     if request.method == "POST":
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
-            archivo_imagen = Producto(imagen = request.FILES['imagen'])
+            archivo_imagen = Producto(imagen = request.FILES.get('filepath', False))
             producto = form.save()
             return redirect('detalle_producto', pk=producto.pk)
     else:
