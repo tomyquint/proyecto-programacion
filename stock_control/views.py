@@ -109,7 +109,7 @@ def signup(request):
         return redirect('registro_completo')
     return render(request, 'registration/signup.html', {'form': form})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login_superuser')
 def lista_usuarios(request):
     usuarios= get_user_model().objects.all()
     return render(request, 'stock_control/lista_usuarios.html', {'usuarios': usuarios})
