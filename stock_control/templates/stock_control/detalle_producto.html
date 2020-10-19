@@ -12,6 +12,7 @@
         <h4><strong>Código de Barras:</strong> {{ producto.código }}</h4>
         <h4> <strong>Categoría:</strong> {% for categoría in producto.categoría.all %} {{ categoría }} {% endfor %}</h4>
         <h4> <strong>Marca:</strong> {{ producto.marca }}</h4>
+        <h4> <strong>Cantidad:</strong> {{ producto.cantidad }}</h4>
         <h4><strong>Precio:</strong> ${{ producto.precio }}</h4>
         <br>
         <a class="btn btn-outline-secondary btn-lg btn-block" href="{% url 'editar_producto' pk=producto.pk %}">Editar <i class="fa fa-pencil" aria-hidden="true"></i></a>
