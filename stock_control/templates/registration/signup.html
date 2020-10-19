@@ -1,7 +1,7 @@
 {% extends 'stock_control/base.html' %}
 
 {% block content %}
-  <h2>Crear Usuario</h2>
+  <h1>Crear Usuario</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

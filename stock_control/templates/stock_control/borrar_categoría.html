@@ -1,0 +1,12 @@
+{% extends 'stock_control/base.html' %}
+
+{% block content %}
+
+    <h1>Borrar Categoría</h1>
+    <p>¿Está seguro de que desea eliminar la categoría? No hay forma de deshacer esta acción.</p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Borrar Categoría</button>
+    </form>
+
+{% endblock %}

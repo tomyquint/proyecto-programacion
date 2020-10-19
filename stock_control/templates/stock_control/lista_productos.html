@@ -5,23 +5,23 @@
   <form action="." method="GET">
 
     <div class="form-row">
-      <div class="form-group col-md-12 mb-3">
+
+      <div class="form-group col-md-6 mb-3">
         <label for="inputNombre">Filtrar por nombre</label>
         <input class="form-control" type="search" placeholder="Nombre" name="nombre_contiene" id="inputNombre">
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-12 mb-3">
+      <div class="form-group col-md-6 mb-3">
         <label for="inputMarca">Filtrar por marca</label>
         <input class="form-control" type="search" placeholder="Marca" name="marca_contiene" id="inputMarca">
       </div>
+
     </div>
 
     <div class="form-row">
 
       <div class="form-group col-md-4">
-        <label for="inputCategoría">Filtrar por Categoría</label>
+        <label for="inputCategoría">Filtrar por categoría</label>
         <select class="form-control" name="categoría" id="inputCategoría">
           <option disabled selected>Escoja una categoría...</option>
           {% for categoría in categorías %}
@@ -42,6 +42,13 @@
 
     </div>
 
+    <div class="form-row">
+      <div class="form-group col-md-12 mb-3">
+        <label for="inputCódigo">Filtrar por código de barras</label>
+        <input class="form-control" type="search" placeholder="Código de barras" name="código" id="inputCódigo">
+      </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">Filtrar</button>
 
   </form>
@@ -58,6 +65,7 @@
         <th scope="col">Cantidad</th>
         <th scope="col">Precio</th>
         <th scope="col">Código de Barras</th>
+        <th scope="col">Editar / Borrar</th>
       </tr>
     </thead>
     <tbody>
@@ -70,6 +78,10 @@
         <td>{{ producto.cantidad }}</td>
         <td>${{ producto.precio }}</td>
         <td>{{ producto.código }}</td>
+        <td>
+          <a class="btn btn-default" href="{% url 'editar_producto' pk=producto.pk %}"><i class="fa fa-pencil"></i></a>
+          <a class="btn btn-default" href="{% url 'borrar_producto' pk=producto.pk %}"><i class="fas fa-trash-alt"></i></a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

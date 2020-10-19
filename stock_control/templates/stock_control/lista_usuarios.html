@@ -1,0 +1,32 @@
+{% extends 'stock_control/base.html' %}
+
+{% block content %}
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre de Usuario</th>
+        <th scope="col">Superusuario</th>
+        <th scope="col">Borrar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+      <tr>
+        <th scope="row">{{ usuario.username }}</th>
+        <td>
+          {% if usuario.is_superuser %}
+          Sí
+          {% else %}
+          No
+          {% endif %}
+        </td>
+        <td>
+          <a class="btn btn-default" href="{% url 'borrar_usuario' username=usuario.username %}"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

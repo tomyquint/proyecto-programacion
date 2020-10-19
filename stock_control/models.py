@@ -14,7 +14,7 @@ class Producto(models.Model):
     marca = models.CharField(max_length=50, blank=True, null=True)
     nombre = models.CharField(max_length=50, default='Producto')
     cantidad = models.IntegerField(default='0')
-    código = models.CharField(primary_key=True, max_length=13, validators=[RegexValidator(r'^\d{1,13}$')])
+    código = models.CharField(primary_key=True, max_length=13, validators=[RegexValidator(r'^\d{13,13}$')])
     imagen = models.ImageField(blank=True, null=True)
     precio = models.DecimalField(max_digits=20, decimal_places=2, default=0)
 

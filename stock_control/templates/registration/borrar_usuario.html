@@ -1,0 +1,10 @@
+{% extends 'stock_control/base.html' %}
+
+{% block content %}
+    <h1>Borrar Usuario</h1>
+    <p>¿Está seguro de que desea eliminar el usuario? No hay forma de deshacer esta acción.</p>
+    <form method="POST" class="producto-form">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Borrar Usuario</button>
+    </form>
+{% endblock %}

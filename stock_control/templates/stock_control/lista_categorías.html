@@ -1,0 +1,24 @@
+{% extends 'stock_control/base.html' %}
+
+{% block content %}
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Categoría</th>
+        <th scope="col">Borrar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for categoría in categorías %}
+      <tr>
+        <th scope="row">{{ categoría.nombre }}</th>
+        <td>
+          <a class="btn btn-default" href="{% url 'borrar_categoría' pk=categoría.pk %}"><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

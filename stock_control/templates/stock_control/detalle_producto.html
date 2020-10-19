@@ -1,9 +1,23 @@
 {% extends 'stock_control/base.html' %}
 
 {% block content %}
-    <div class="producto">
-      <a class="btn btn-default" href="{% url 'editar_producto' pk=producto.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-      <h2>{{ producto.nombre }}</h2>
-      <img src="{{ MEDIA_URL }}{{ producto.imagen }}"/>
+
+  <div>
+    <div class="row">
+      <div class="col-md">
+        <img src="{{ MEDIA_URL }}{{ producto.imagen }}" class="imagen_detalle">
+      </div>
+      <div class="col-md">
+        <h1 class="display-1">{{ producto.nombre }}</h1>
+        <h4><strong>Código de Barras:</strong> {{ producto.código }}</h4>
+        <h4> <strong>Categoría:</strong> {% for categoría in producto.categoría.all %} {{ categoría }} {% endfor %}</h4>
+        <h4> <strong>Marca:</strong> {{ producto.marca }}</h4>
+        <h4><strong>Precio:</strong> ${{ producto.precio }}</h4>
+        <br>
+        <a class="btn btn-outline-secondary btn-lg btn-block" href="{% url 'editar_producto' pk=producto.pk %}">Editar <i class="fa fa-pencil" aria-hidden="true"></i></a>
+        <a class="btn btn-outline-danger btn-lg btn-block" href="{% url 'borrar_producto' pk=producto.pk %}">Borrar <i class="fas fa-trash-alt"></i></a>
+      </div>
     </div>
+  </div>
+
 {% endblock %}

@@ -1,3 +1,11 @@
-img.imagen_tabla  {
+img.imagen_tabla {
   width: 100px;
+}
+
+img.imagen_detalle {
+  height: 425px;
+}
+
+img.imagen_categoría {
+  height: 300px
 }
